@@ -55,19 +55,21 @@ const Index = () => {
     try {
       // Masquer les boutons de suppression temporairement
       const noPrintElements = document.querySelectorAll('.no-print');
-      noPrintElements.forEach(el => (el as HTMLElement).style.visibility = 'hidden');
+      noPrintElements.forEach(el => (el as HTMLElement).style.display = 'none');
       
       const canvas = await html2canvas(invoiceRef.current, {
-        scale: 2,
+        scale: 3, // Augmenter la résolution pour une meilleure qualité
         useCORS: true,
         logging: false,
         backgroundColor: '#ffffff',
+        windowWidth: invoiceRef.current.scrollWidth,
+        windowHeight: invoiceRef.current.scrollHeight,
       });
       
       // Restaurer les éléments
-      noPrintElements.forEach(el => (el as HTMLElement).style.visibility = 'visible');
+      noPrintElements.forEach(el => (el as HTMLElement).style.display = '');
       
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL("image/png", 1.0);
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -76,13 +78,25 @@ const Index = () => {
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Calculer les dimensions avec des marges
+      const marginX = 10;
+      const marginY = 10;
+      const availableWidth = pdfWidth - (marginX * 2);
+      const availableHeight = pdfHeight - (marginY * 2);
+      
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 5;
+      const ratio = Math.min(availableWidth / imgWidth, availableHeight / imgHeight);
       
-      pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      const finalWidth = imgWidth * ratio;
+      const finalHeight = imgHeight * ratio;
+      
+      // Centrer l'image sur la page
+      const imgX = (pdfWidth - finalWidth) / 2;
+      const imgY = marginY;
+      
+      pdf.addImage(imgData, "PNG", imgX, imgY, finalWidth, finalHeight, undefined, 'FAST');
       
       const fileName = `Facture_${invoiceNumber}_${clientName || "client"}.pdf`;
       pdf.save(fileName);
