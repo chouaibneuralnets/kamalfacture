@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
+import { Printer, Download } from "lucide-react";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import InvoiceHeader from "@/components/InvoiceHeader";
 import ClientInfo from "@/components/ClientInfo";
 import InvoiceTable, { InvoiceItem } from "@/components/InvoiceTable";
+import { toast } from "sonner";
 
 const Index = () => {
+  const invoiceRef = useRef<HTMLDivElement>(null);
   const [invoiceNumber, setInvoiceNumber] = useState("FA2500001");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [clientName, setClientName] = useState("");
@@ -15,6 +19,7 @@ const Index = () => {
   const [items, setItems] = useState<InvoiceItem[]>([
     { id: "1", designation: "", quantity: 1, prixUnitaireTTC: 0 },
   ]);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleItemChange = (id: string, field: keyof InvoiceItem, value: string | number) => {
     setItems((prev) =>
@@ -41,18 +46,72 @@ const Index = () => {
     window.print();
   };
 
+  const handleDownloadPDF = async () => {
+    if (!invoiceRef.current) return;
+    
+    setIsDownloading(true);
+    toast.info("Génération du PDF en cours...");
+    
+    try {
+      // Masquer les boutons de suppression temporairement
+      const noPrintElements = document.querySelectorAll('.no-print');
+      noPrintElements.forEach(el => (el as HTMLElement).style.visibility = 'hidden');
+      
+      const canvas = await html2canvas(invoiceRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+      
+      // Restaurer les éléments
+      noPrintElements.forEach(el => (el as HTMLElement).style.visibility = 'visible');
+      
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 5;
+      
+      pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      
+      const fileName = `Facture_${invoiceNumber}_${clientName || "client"}.pdf`;
+      pdf.save(fileName);
+      
+      toast.success("Facture téléchargée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la génération du PDF:", error);
+      toast.error("Erreur lors de la génération du PDF");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-muted p-4 md:p-8">
-      {/* Bouton imprimer */}
-      <div className="max-w-4xl mx-auto mb-4 no-print">
-        <Button onClick={handlePrint} className="gap-2">
+      {/* Boutons d'action */}
+      <div className="max-w-4xl mx-auto mb-4 no-print flex gap-2 flex-wrap">
+        <Button onClick={handleDownloadPDF} disabled={isDownloading} className="gap-2">
+          <Download className="h-4 w-4" />
+          {isDownloading ? "Téléchargement..." : "Télécharger PDF"}
+        </Button>
+        <Button onClick={handlePrint} variant="outline" className="gap-2">
           <Printer className="h-4 w-4" />
-          Imprimer la facture
+          Imprimer
         </Button>
       </div>
 
       {/* Facture */}
-      <div className="max-w-4xl mx-auto bg-card p-6 md:p-10 shadow-lg">
+      <div ref={invoiceRef} className="max-w-4xl mx-auto bg-card p-6 md:p-10 shadow-lg">
         <InvoiceHeader
           invoiceNumber={invoiceNumber}
           date={date}
