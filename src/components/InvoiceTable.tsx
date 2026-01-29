@@ -54,33 +54,33 @@ const InvoiceTable = ({
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              <td className="border border-foreground p-1">
+              <td className="border border-foreground p-2">
                 <Input
                   value={item.designation}
                   onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
-                  className="border-0 h-8 text-foreground font-medium placeholder:text-muted-foreground/50"
+                  className="border-0 h-10 text-foreground font-medium px-2 placeholder:text-muted-foreground/50"
                   placeholder="Description du produit"
                 />
               </td>
-              <td className="border border-foreground p-1">
+              <td className="border border-foreground p-2">
                 <Input
                   type="number"
                   value={item.quantity}
                   onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                  className="border-0 h-8 text-center text-foreground font-medium"
+                  className="border-0 h-10 text-center text-foreground font-medium px-2"
                   min="1"
                 />
               </td>
-              <td className="border border-foreground p-1">
+              <td className="border border-foreground p-2">
                 <Input
                   type="number"
                   value={item.prixUnitaireTTC}
                   onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
-                  className="border-0 h-8 text-right text-foreground font-medium"
+                  className="border-0 h-10 text-right text-foreground font-medium px-2"
                   step="0.01"
                 />
               </td>
-              <td className="border border-foreground p-2 text-right font-semibold text-foreground">
+              <td className="border border-foreground p-3 text-right font-semibold text-foreground">
                 {formatNumber(calculateTotalTTC(item))}
               </td>
               <td className="border border-foreground p-1 no-print">
