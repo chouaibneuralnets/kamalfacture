@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Trash2 } from "lucide-react";
+import { numberToFrenchWords } from "@/lib/numberToWords";
 
 export interface InvoiceItem {
   id: string;
@@ -132,6 +133,16 @@ const InvoiceTable = ({
             <span>{formatNumber(totalTTC)} DH</span>
           </div>
         </div>
+      </div>
+
+      {/* Phrase d'arrêté */}
+      <div className="mt-6 p-4 border border-foreground bg-muted/50">
+        <p className="text-sm">
+          <span className="font-semibold">Arrêté la présente facture à la somme de :</span>
+        </p>
+        <p className="mt-1 font-bold text-base">
+          {numberToFrenchWords(totalTTC)}
+        </p>
       </div>
     </div>
   );
