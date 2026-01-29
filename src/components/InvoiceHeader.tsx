@@ -44,7 +44,7 @@ const InvoiceHeader = ({
             type="text"
             value={invoiceNumber}
             onChange={(e) => onInvoiceNumberChange(e.target.value)}
-            className="border-b border-foreground bg-transparent px-2 py-1 w-32 focus:outline-none focus:border-primary"
+            className="border-b-2 border-foreground bg-transparent px-2 py-1 w-32 focus:outline-none focus:border-primary text-foreground font-semibold"
           />
         </div>
         <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ const InvoiceHeader = ({
             type="date"
             value={date}
             onChange={(e) => onDateChange(e.target.value)}
-            className="border-b border-foreground bg-transparent px-2 py-1 focus:outline-none focus:border-primary"
+            className="border-b-2 border-foreground bg-transparent px-2 py-1 focus:outline-none focus:border-primary text-foreground font-semibold"
           />
         </div>
       </div>

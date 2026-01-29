@@ -58,7 +58,7 @@ const InvoiceTable = ({
                 <Input
                   value={item.designation}
                   onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
-                  className="border-0 h-8"
+                  className="border-0 h-8 text-foreground font-medium placeholder:text-muted-foreground/50"
                   placeholder="Description du produit"
                 />
               </td>
@@ -67,7 +67,7 @@ const InvoiceTable = ({
                   type="number"
                   value={item.quantity}
                   onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                  className="border-0 h-8 text-center"
+                  className="border-0 h-8 text-center text-foreground font-medium"
                   min="1"
                 />
               </td>
@@ -76,11 +76,11 @@ const InvoiceTable = ({
                   type="number"
                   value={item.prixUnitaireTTC}
                   onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
-                  className="border-0 h-8 text-right"
+                  className="border-0 h-8 text-right text-foreground font-medium"
                   step="0.01"
                 />
               </td>
-              <td className="border border-foreground p-2 text-right font-medium">
+              <td className="border border-foreground p-2 text-right font-semibold text-foreground">
                 {formatNumber(calculateTotalTTC(item))}
               </td>
               <td className="border border-foreground p-1 no-print">
