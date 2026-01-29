@@ -58,7 +58,7 @@ const InvoiceTable = ({
                 <Input
                   value={item.designation}
                   onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
-                  className="border-0 h-10 text-foreground font-medium px-2 placeholder:text-muted-foreground/50"
+                  className="border-0 h-10 text-foreground font-medium px-2 py-0 leading-none placeholder:text-muted-foreground/50"
                   placeholder="Description du produit"
                 />
               </td>
@@ -67,7 +67,7 @@ const InvoiceTable = ({
                   type="number"
                   value={item.quantity}
                   onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                  className="border-0 h-10 text-center text-foreground font-medium px-2"
+                  className="border-0 h-10 text-center tabular-nums text-foreground font-medium px-2 py-0 leading-none"
                   min="1"
                 />
               </td>
@@ -76,7 +76,7 @@ const InvoiceTable = ({
                   type="number"
                   value={item.prixUnitaireTTC}
                   onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
-                  className="border-0 h-10 text-right text-foreground font-medium px-2"
+                  className="border-0 h-10 text-right tabular-nums text-foreground font-medium px-2 py-0 leading-none"
                   step="0.01"
                 />
               </td>
@@ -121,7 +121,7 @@ const InvoiceTable = ({
                 type="number"
                 value={tvaRate}
                 onChange={(e) => onTvaChange(parseFloat(e.target.value) || 0)}
-                className="w-16 h-6 text-center border-foreground"
+                className="w-16 h-7 py-0 leading-none text-center tabular-nums border-foreground text-foreground font-semibold"
                 step="1"
               />
               %:

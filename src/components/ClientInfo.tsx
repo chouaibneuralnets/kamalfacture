@@ -27,7 +27,7 @@ const ClientInfo = ({
           <Input
             value={clientName}
             onChange={(e) => onClientNameChange(e.target.value)}
-            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 placeholder:text-muted-foreground/50"
+            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 py-0 leading-none placeholder:text-muted-foreground/50"
             placeholder="Nom du client"
           />
         </div>
@@ -36,7 +36,7 @@ const ClientInfo = ({
           <Input
             value={ice}
             onChange={(e) => onIceChange(e.target.value)}
-            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 placeholder:text-muted-foreground/50"
+            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 py-0 leading-none placeholder:text-muted-foreground/50"
             placeholder="Identifiant Commun de l'Entreprise"
           />
         </div>
@@ -45,7 +45,7 @@ const ClientInfo = ({
           <Input
             value={address}
             onChange={(e) => onAddressChange(e.target.value)}
-            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 placeholder:text-muted-foreground/50"
+            className="flex-1 border-foreground text-foreground font-medium h-10 px-3 py-0 leading-none placeholder:text-muted-foreground/50"
             placeholder="Adresse du client"
           />
         </div>
