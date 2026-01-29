@@ -23,29 +23,29 @@ const ClientInfo = ({
       <h3 className="font-semibold mb-3 border-b border-foreground pb-2">INFORMATIONS CLIENT</h3>
       <div className="grid gap-3">
         <div className="flex items-center gap-3">
-          <Label className="w-32 font-medium">Nom Client:</Label>
+          <Label className="w-32 font-semibold text-foreground">Nom Client:</Label>
           <Input
             value={clientName}
             onChange={(e) => onClientNameChange(e.target.value)}
-            className="flex-1 border-foreground"
+            className="flex-1 border-foreground text-foreground font-medium placeholder:text-muted-foreground/50"
             placeholder="Nom du client"
           />
         </div>
         <div className="flex items-center gap-3">
-          <Label className="w-32 font-medium">ICE:</Label>
+          <Label className="w-32 font-semibold text-foreground">ICE:</Label>
           <Input
             value={ice}
             onChange={(e) => onIceChange(e.target.value)}
-            className="flex-1 border-foreground"
+            className="flex-1 border-foreground text-foreground font-medium placeholder:text-muted-foreground/50"
             placeholder="Identifiant Commun de l'Entreprise"
           />
         </div>
         <div className="flex items-center gap-3">
-          <Label className="w-32 font-medium">Adresse:</Label>
+          <Label className="w-32 font-semibold text-foreground">Adresse:</Label>
           <Input
             value={address}
             onChange={(e) => onAddressChange(e.target.value)}
-            className="flex-1 border-foreground"
+            className="flex-1 border-foreground text-foreground font-medium placeholder:text-muted-foreground/50"
             placeholder="Adresse du client"
           />
         </div>
