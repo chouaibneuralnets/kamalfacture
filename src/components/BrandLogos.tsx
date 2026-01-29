@@ -1,24 +1,38 @@
+import michelin from "@/assets/brands/michelin.jpeg";
+import bridgestone from "@/assets/brands/bridgestone.jpeg";
+import goodyear from "@/assets/brands/goodyear.jpeg";
+import continental from "@/assets/brands/continental.jpg";
+import hankook from "@/assets/brands/hankook.jpeg";
+import pirelli from "@/assets/brands/pirelli.jpg";
+import falken from "@/assets/brands/falken.jpeg";
+import yokohama from "@/assets/brands/yokohama.jpeg";
+import giti from "@/assets/brands/giti.jpg";
+
 const BrandLogos = () => {
   const brands = [
-    { name: "MICHELIN", bg: "bg-yellow-400", text: "text-blue-900", className: "font-bold" },
-    { name: "BRIDGESTONE", bg: "bg-red-600", text: "text-white", className: "font-bold tracking-tight" },
-    { name: "GOODYEAR", bg: "bg-blue-800", text: "text-yellow-400", className: "font-bold" },
-    { name: "Continental", bg: "bg-orange-500", text: "text-black", className: "font-bold italic" },
-    { name: "DUNLOP", bg: "bg-black", text: "text-yellow-400", className: "font-bold" },
-    { name: "HANKOOK", bg: "bg-orange-600", text: "text-black", className: "font-bold" },
-    { name: "PIRELLI", bg: "bg-yellow-400", text: "text-black", className: "font-bold italic" },
-    { name: "TAURUS", bg: "bg-blue-700", text: "text-white", className: "font-bold" },
-    { name: "Barum", bg: "bg-orange-500", text: "text-white", className: "font-bold" },
+    { name: "Michelin", logo: michelin },
+    { name: "Bridgestone", logo: bridgestone },
+    { name: "Goodyear", logo: goodyear },
+    { name: "Continental", logo: continental },
+    { name: "Hankook", logo: hankook },
+    { name: "Pirelli", logo: pirelli },
+    { name: "Falken", logo: falken },
+    { name: "Yokohama", logo: yokohama },
+    { name: "Giti", logo: giti },
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 py-2">
+    <div className="grid grid-cols-3 gap-2 py-2">
       {brands.map((brand) => (
         <div
           key={brand.name}
-          className={`${brand.bg} ${brand.text} ${brand.className} px-3 py-1 text-xs rounded-sm`}
+          className="bg-white rounded-sm overflow-hidden flex items-center justify-center h-10"
         >
-          {brand.name}
+          <img 
+            src={brand.logo} 
+            alt={brand.name} 
+            className="h-full w-full object-contain"
+          />
         </div>
       ))}
     </div>
