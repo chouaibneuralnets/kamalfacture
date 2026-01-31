@@ -6,6 +6,7 @@ interface InvoiceHeaderProps {
   date: string;
   onInvoiceNumberChange: (value: string) => void;
   onDateChange: (value: string) => void;
+  exportMode?: boolean;
 }
 
 const InvoiceHeader = ({
@@ -13,6 +14,7 @@ const InvoiceHeader = ({
   date,
   onInvoiceNumberChange,
   onDateChange,
+  exportMode = false,
 }: InvoiceHeaderProps) => {
   return (
     <div className="border-b-2 border-foreground pb-4">
@@ -40,21 +42,33 @@ const InvoiceHeader = ({
       <div className="mt-4 flex gap-8">
         <div className="flex items-baseline gap-2">
           <span className="font-semibold whitespace-nowrap">FACTURE N°:</span>
-          <input
-            type="text"
-            value={invoiceNumber}
-            onChange={(e) => onInvoiceNumberChange(e.target.value)}
-            className="invoice-field border-b-2 border-foreground bg-transparent px-2 py-1 w-32 focus:outline-none focus:border-primary text-foreground font-semibold leading-normal"
-          />
+          {exportMode ? (
+            <div className="invoice-field invoice-field-display w-32 border-b-2 border-foreground bg-transparent px-2 font-semibold text-foreground">
+              {invoiceNumber || "\u00A0"}
+            </div>
+          ) : (
+            <input
+              type="text"
+              value={invoiceNumber}
+              onChange={(e) => onInvoiceNumberChange(e.target.value)}
+              className="invoice-field border-b-2 border-foreground bg-transparent px-2 py-1 w-32 focus:outline-none focus:border-primary text-foreground font-semibold leading-normal"
+            />
+          )}
         </div>
         <div className="flex items-baseline gap-2">
           <span className="font-semibold whitespace-nowrap">Date:</span>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => onDateChange(e.target.value)}
-            className="invoice-field border-b-2 border-foreground bg-transparent px-2 py-1 focus:outline-none focus:border-primary text-foreground font-semibold leading-normal"
-          />
+          {exportMode ? (
+            <div className="invoice-field invoice-field-display border-b-2 border-foreground bg-transparent px-2 font-semibold text-foreground">
+              {date || "\u00A0"}
+            </div>
+          ) : (
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => onDateChange(e.target.value)}
+              className="invoice-field border-b-2 border-foreground bg-transparent px-2 py-1 focus:outline-none focus:border-primary text-foreground font-semibold leading-normal"
+            />
+          )}
         </div>
       </div>
     </div>

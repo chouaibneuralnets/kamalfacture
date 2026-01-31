@@ -131,6 +131,7 @@ const Index = () => {
           date={date}
           onInvoiceNumberChange={setInvoiceNumber}
           onDateChange={setDate}
+          exportMode={isDownloading}
         />
 
         <ClientInfo
@@ -140,6 +141,7 @@ const Index = () => {
           onClientNameChange={setClientName}
           onIceChange={setIce}
           onAddressChange={setAddress}
+          exportMode={isDownloading}
         />
 
         <InvoiceTable
@@ -149,6 +151,7 @@ const Index = () => {
           onAddItem={handleAddItem}
           onRemoveItem={handleRemoveItem}
           onTvaChange={setTvaRate}
+          exportMode={isDownloading}
         />
 
         {/* Footer */}
