@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Printer, Download } from "lucide-react";
 import html2canvas from "html2canvas";
@@ -48,14 +49,24 @@ const Index = () => {
 
   const handleDownloadPDF = async () => {
     if (!invoiceRef.current) return;
-    
-    setIsDownloading(true);
+
+    // IMPORTANT: React state updates are async. We must ensure the UI has
+    // re-rendered in Export Mode (static fields) BEFORE html2canvas takes a snapshot.
+    flushSync(() => setIsDownloading(true));
     toast.info("Génération du PDF en cours...");
     
     try {
+      // Wait for the export UI to paint (and for fonts to be ready) to avoid misalignment in the PDF.
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      // Ensure webfonts are fully loaded before rendering to canvas.
+      if ("fonts" in document) {
+        await document.fonts.ready;
+      }
+
       // Masquer les boutons de suppression temporairement
       const noPrintElements = document.querySelectorAll('.no-print');
-      noPrintElements.forEach(el => (el as HTMLElement).style.display = 'none');
+      noPrintElements.forEach((el) => ((el as HTMLElement).style.display = "none"));
       
       const canvas = await html2canvas(invoiceRef.current, {
         scale: 3, // Augmenter la résolution pour une meilleure qualité
@@ -67,7 +78,7 @@ const Index = () => {
       });
       
       // Restaurer les éléments
-      noPrintElements.forEach(el => (el as HTMLElement).style.display = '');
+      noPrintElements.forEach((el) => ((el as HTMLElement).style.display = ""));
       
       const imgData = canvas.toDataURL("image/png", 1.0);
       const pdf = new jsPDF({
