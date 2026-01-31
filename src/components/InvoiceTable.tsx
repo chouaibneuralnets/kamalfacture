@@ -44,46 +44,46 @@ const InvoiceTable = ({
       <table className="w-full border-collapse border border-foreground">
         <thead>
           <tr className="bg-muted">
-            <th className="border border-foreground p-2 text-left">Désignation</th>
-            <th className="border border-foreground p-2 text-center w-24">Quantité</th>
-            <th className="border border-foreground p-2 text-right w-32">P.U TTC</th>
-            <th className="border border-foreground p-2 text-right w-32">Total</th>
-            <th className="border border-foreground p-2 w-12 no-print"></th>
+            <th className="border border-foreground p-2 text-left align-middle">Désignation</th>
+            <th className="border border-foreground p-2 text-center w-24 align-middle">Quantité</th>
+            <th className="border border-foreground p-2 text-right w-32 align-middle">P.U TTC</th>
+            <th className="border border-foreground p-2 text-right w-32 align-middle">Total</th>
+            <th className="border border-foreground p-2 w-12 no-print align-middle"></th>
           </tr>
         </thead>
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              <td className="border border-foreground p-2">
+              <td className="border border-foreground p-2 align-middle">
                 <Input
                   value={item.designation}
                   onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
-                  className="border-0 h-10 text-foreground font-medium px-2 py-0 leading-none placeholder:text-muted-foreground/50"
+                  className="invoice-field border-0 h-10 text-foreground font-medium px-2 placeholder:text-muted-foreground/50"
                   placeholder="Description du produit"
                 />
               </td>
-              <td className="border border-foreground p-2">
+              <td className="border border-foreground p-2 align-middle">
                 <Input
                   type="number"
                   value={item.quantity}
                   onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                  className="border-0 h-10 text-center tabular-nums text-foreground font-medium px-2 py-0 leading-none"
+                  className="invoice-field border-0 h-10 text-center tabular-nums text-foreground font-medium px-2"
                   min="1"
                 />
               </td>
-              <td className="border border-foreground p-2">
+              <td className="border border-foreground p-2 align-middle">
                 <Input
                   type="number"
                   value={item.prixUnitaireTTC}
                   onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
-                  className="border-0 h-10 text-right tabular-nums text-foreground font-medium px-2 py-0 leading-none"
+                  className="invoice-field border-0 h-10 text-right tabular-nums text-foreground font-medium px-2"
                   step="0.01"
                 />
               </td>
-              <td className="border border-foreground p-3 text-right font-semibold text-foreground">
+              <td className="border border-foreground p-3 text-right font-semibold text-foreground align-middle">
                 {formatNumber(calculateTotalTTC(item))}
               </td>
-              <td className="border border-foreground p-1 no-print">
+              <td className="border border-foreground p-1 no-print align-middle">
                 <Button
                   variant="ghost"
                   size="sm"

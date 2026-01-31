@@ -125,7 +125,7 @@ const Index = () => {
       </div>
 
       {/* Facture */}
-      <div ref={invoiceRef} className="max-w-4xl mx-auto bg-card p-6 md:p-10 shadow-lg">
+      <div ref={invoiceRef} className="invoice-surface max-w-4xl mx-auto bg-card p-6 md:p-10 shadow-lg">
         <InvoiceHeader
           invoiceNumber={invoiceNumber}
           date={date}

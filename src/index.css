@@ -93,6 +93,14 @@
     @apply bg-background text-foreground;
   }
 
+  /* Invoice: force perfect vertical centering inside fields (also for html2canvas/PDF) */
+  .invoice-surface .invoice-field {
+    height: 2.5rem; /* 40px */
+    line-height: 2.5rem;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
   /* Better alignment for numeric fields (removes spin buttons that shift text) */
   input[type="number"] {
     -moz-appearance: textfield;
