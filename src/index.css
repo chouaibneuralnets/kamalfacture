@@ -101,6 +101,11 @@
     padding-bottom: 0 !important;
   }
 
+  .invoice-surface .invoice-field-display {
+    display: flex;
+    align-items: center;
+  }
+
   /* Better alignment for numeric fields (removes spin buttons that shift text) */
   input[type="number"] {
     -moz-appearance: textfield;

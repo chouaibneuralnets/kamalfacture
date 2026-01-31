@@ -17,6 +17,7 @@ interface InvoiceTableProps {
   onAddItem: () => void;
   onRemoveItem: (id: string) => void;
   onTvaChange: (value: number) => void;
+  exportMode?: boolean;
 }
 
 const InvoiceTable = ({
@@ -26,6 +27,7 @@ const InvoiceTable = ({
   onAddItem,
   onRemoveItem,
   onTvaChange,
+  exportMode = false,
 }: InvoiceTableProps) => {
   const calculateTotalTTC = (item: InvoiceItem) => {
     return item.quantity * item.prixUnitaireTTC;
@@ -38,6 +40,9 @@ const InvoiceTable = ({
   const formatNumber = (num: number) => {
     return num.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
+
+  const displayText = (value: string) => (value?.trim() ? value : "\u00A0");
+  const displayNumber = (value: number) => (value ? formatNumber(value) : "\u00A0");
 
   return (
     <div className="mt-6">
@@ -55,30 +60,48 @@ const InvoiceTable = ({
           {items.map((item) => (
             <tr key={item.id}>
               <td className="border border-foreground p-2 align-middle">
-                <Input
-                  value={item.designation}
-                  onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
-                  className="invoice-field border-0 h-10 text-foreground font-medium px-2 placeholder:text-muted-foreground/50"
-                  placeholder="Description du produit"
-                />
+                {exportMode ? (
+                  <div className="invoice-field invoice-field-display justify-start px-2 text-foreground font-medium">
+                    {displayText(item.designation)}
+                  </div>
+                ) : (
+                  <Input
+                    value={item.designation}
+                    onChange={(e) => onItemChange(item.id, "designation", e.target.value)}
+                    className="invoice-field border-0 h-10 text-foreground font-medium px-2 placeholder:text-muted-foreground/50"
+                    placeholder="Description du produit"
+                  />
+                )}
               </td>
               <td className="border border-foreground p-2 align-middle">
-                <Input
-                  type="number"
-                  value={item.quantity}
-                  onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                  className="invoice-field border-0 h-10 text-center tabular-nums text-foreground font-medium px-2"
-                  min="1"
-                />
+                {exportMode ? (
+                  <div className="invoice-field invoice-field-display justify-center px-2 text-center tabular-nums text-foreground font-medium">
+                    {item.quantity}
+                  </div>
+                ) : (
+                  <Input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => onItemChange(item.id, "quantity", parseInt(e.target.value) || 0)}
+                    className="invoice-field border-0 h-10 text-center tabular-nums text-foreground font-medium px-2"
+                    min="1"
+                  />
+                )}
               </td>
               <td className="border border-foreground p-2 align-middle">
-                <Input
-                  type="number"
-                  value={item.prixUnitaireTTC}
-                  onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
-                  className="invoice-field border-0 h-10 text-right tabular-nums text-foreground font-medium px-2"
-                  step="0.01"
-                />
+                {exportMode ? (
+                  <div className="invoice-field invoice-field-display justify-end px-2 text-right tabular-nums text-foreground font-medium">
+                    {displayNumber(item.prixUnitaireTTC)}
+                  </div>
+                ) : (
+                  <Input
+                    type="number"
+                    value={item.prixUnitaireTTC}
+                    onChange={(e) => onItemChange(item.id, "prixUnitaireTTC", parseFloat(e.target.value) || 0)}
+                    className="invoice-field border-0 h-10 text-right tabular-nums text-foreground font-medium px-2"
+                    step="0.01"
+                  />
+                )}
               </td>
               <td className="border border-foreground p-3 text-right font-semibold text-foreground align-middle">
                 {formatNumber(calculateTotalTTC(item))}
@@ -117,13 +140,19 @@ const InvoiceTable = ({
           <div className="flex justify-between p-2 border-b border-foreground items-center">
             <span className="flex items-center gap-2">
               TVA
-              <Input
-                type="number"
-                value={tvaRate}
-                onChange={(e) => onTvaChange(parseFloat(e.target.value) || 0)}
-                className="w-16 h-7 py-0 leading-none text-center tabular-nums border-foreground text-foreground font-semibold"
-                step="1"
-              />
+              {exportMode ? (
+                <span className="invoice-field invoice-field-display justify-center w-16 rounded-md border border-input bg-background text-center tabular-nums text-foreground font-semibold">
+                  {tvaRate}
+                </span>
+              ) : (
+                <Input
+                  type="number"
+                  value={tvaRate}
+                  onChange={(e) => onTvaChange(parseFloat(e.target.value) || 0)}
+                  className="w-16 h-7 py-0 leading-none text-center tabular-nums border-foreground text-foreground font-semibold"
+                  step="1"
+                />
+              )}
               %:
             </span>
             <span className="font-medium">{formatNumber(totalTVA)} DH</span>
