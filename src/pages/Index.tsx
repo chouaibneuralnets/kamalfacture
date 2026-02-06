@@ -148,10 +148,8 @@ const Index = () => {
         <ClientInfo
           clientName={clientName}
           ice={ice}
-          address={address}
           onClientNameChange={setClientName}
           onIceChange={setIce}
-          onAddressChange={setAddress}
           exportMode={isDownloading}
         />
 
