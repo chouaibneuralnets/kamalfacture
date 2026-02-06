@@ -168,7 +168,7 @@ const Index = () => {
         {/* Footer */}
         <div className="mt-10 pt-6 border-t border-foreground text-center text-sm text-muted-foreground">
           <p className="font-semibold text-foreground">PRIME STAR TIRE</p>
-          <p>Tél: +212 661 888 114 / +212 626 672 019</p>
+          <p>RC: 118530 | IF: 96361034 | Patente: 77331275</p>
         </div>
       </div>
     </div>
