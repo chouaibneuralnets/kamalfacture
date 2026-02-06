@@ -4,20 +4,16 @@ import { Label } from "@/components/ui/label";
 interface ClientInfoProps {
   clientName: string;
   ice: string;
-  address: string;
   onClientNameChange: (value: string) => void;
   onIceChange: (value: string) => void;
-  onAddressChange: (value: string) => void;
   exportMode?: boolean;
 }
 
 const ClientInfo = ({
   clientName,
   ice,
-  address,
   onClientNameChange,
   onIceChange,
-  onAddressChange,
   exportMode = false,
 }: ClientInfoProps) => {
   return (
@@ -51,21 +47,6 @@ const ClientInfo = ({
               onChange={(e) => onIceChange(e.target.value)}
               className="flex-1 invoice-field border-foreground text-foreground font-medium h-10 px-3 placeholder:text-muted-foreground/50"
               placeholder="Identifiant Commun de l'Entreprise"
-            />
-          )}
-        </div>
-        <div className="flex items-center gap-3">
-          <Label className="w-32 font-semibold text-foreground">Adresse:</Label>
-          {exportMode ? (
-            <div className="flex-1 invoice-field invoice-field-display rounded-md border border-input bg-background px-3 font-medium text-foreground">
-              {address || "\u00A0"}
-            </div>
-          ) : (
-            <Input
-              value={address}
-              onChange={(e) => onAddressChange(e.target.value)}
-              className="flex-1 invoice-field border-foreground text-foreground font-medium h-10 px-3 placeholder:text-muted-foreground/50"
-              placeholder="Adresse du client"
             />
           )}
         </div>
